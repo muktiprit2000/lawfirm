@@ -15,9 +15,9 @@ class Database
   
   function __construct($filename)	//connect to mongo database  
   {
-    include("$filename");		//file from the valid user data come from to longin to the perticular database in mongo
+    //include("$filename");		//file from the valid user data come from to longin to the perticular database in mongo
      try {
-      $this->cxn = new Mongo("mongodb://{$user}:{$passwd}@{$host}/$database");
+      $this->cxn = new Mongo("mongodb://c0d925ea:qvu8aidfbklek7t2fpnool6k5j@dbh83.mongolab.com:27837/orchestra_c0d925ea_40a09");
       
     }
     catch ( Exception $e ) {
