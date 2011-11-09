@@ -1,0 +1,89 @@
+<?php
+ /* Name: Department.class
+  * Desc: Class containing details for a department
+  *       and the content within the department.
+  */
+include_once("../classfiles/BaseInfo.class");
+
+class Department extends BaseInfo
+{
+  protected $pagetitle;                               #10
+  protected $description;
+  protected $metatitle;
+  protected $metakeys;
+  
+  function __construct($id, $name, $desc)
+  {
+     parent::__construct($id, $name);                   #14
+     $this->description = $desc;
+  }
+  
+  public function getDescription()                      #18
+  {
+    return $this->description;
+  }
+
+  public function getPagetitle()                      #18
+  {
+    return $this->pagetitle;
+  }
+  
+  public function getMetatitle()                      #18
+  {
+    return $this->metatitle;
+  }
+
+  public function getMetakeys()                      #18
+  {
+    return $this->metakeys;
+  }
+
+
+  public static function findAll()                     
+  {
+    $cxn = parent::getConnection("pagecontent");                     #25
+    /*$sql = "SELECT dept_id, name, description
+              FROM Department
+             ORDER BY name";
+    $results = $cxn->query($sql);*/
+	$results=$cxn->find();
+    if (!$results)
+    {
+      throw new Exception("Problem getting data: ".
+                          $cxn->error);
+    }
+    $depts = array();
+	foreach ($results as $db) {
+            print $db['name'];
+			$depts[] = new Department($db['pageid'], 
+        $db['pagename'], $db['pagebody'],$db['pagetitle'],$db['metatitle'],$db['metakeys']);
+        
+        }
+    
+    return $depts;                                     
+  }
+
+  public static function findById($id)                 
+  {
+    $cxn = parent::getConnection();
+    $result=$cxn->findOne(array('pageid'=>$id));
+    /*$sql = "SELECT dept_id, name, description
+            FROM Department
+            WHERE dept_id = $id";
+    $results = $cxn->query($sql);*/
+    
+    if (!$result)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+                
+    
+      return new Department($result['pageid'], 
+        $result['pagename'], $result['pagebody'],$result['pagetitle'],$result['metatitle'],$result['metakeys']);
+                                           
+  }
+
+}
+
+?>

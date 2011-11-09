@@ -1,0 +1,112 @@
+<?php
+ /* Name: Department.class
+  * Desc: Class containing details for a department
+  *       and the content within the department.
+  */
+include_once("../classfiles/BaseInfo.class");
+
+class Settings extends BaseInfo
+{
+  protected $address;   #10
+  protected $phone;
+  protected $adminemail;
+  protected $contactemail;
+ 
+  
+  function __construct($id, $name, $add, $phone, $aemail, $cemail)
+  {
+     parent::__construct($id, $name);                   #14
+     $this->address= $add;
+	 $this->phone= $phone;
+	 $this->adminemail = $aemail;
+	 $this->contactemail =$cemail;
+	 }
+  
+ public function setAddress($add)
+  {
+    $this->address = $add;
+  }
+ public function getAddress()                      #18
+  {
+    return $this->address;
+  }
+  public function setPhone($phone)
+  {
+    $this->phone = $phone;
+  }
+ public function getPhone()                      #18
+  {
+    return $this->phone;
+  }
+  
+ public function setAdminemail($aemail)                      #18
+  {
+    $this->adminemail=$aemail;
+  }
+  public function getAdminemail()                      #18
+  {
+    return $this->adminemail;
+  }
+  public function setContemail($cemail)                      #18
+  {
+    $this->contactemail=$cemail;
+  }
+  public function getContemail()                      #18
+  {
+    return $this->contactemail;
+  }
+
+  public static function findById($id)                 
+  {
+    $cxn = parent::getConnection("settings");
+    $result=$cxn->findOne(array('setid'=>$id));
+        
+    if (!$result)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+                
+    
+      return new Settings($result['setid'], $result['settingname'], 
+        $result['address'],$result['phone'], $result['aemail'], $result['cemail']);
+                                           
+  }
+                                       
+  public static function docsInCollection()
+  {
+  $cxn = parent::getConnection("settings");
+  $totdocs=$cxn->count();
+  return $totdocs;
+  }
+  public function save()	#140
+  {
+    if (isset($this->id))                               #142
+    {
+      $cxn = parent::getConnection("settings");
+	  $cxn->update(array('setid'=>$this->id),array('$set' => array('settingname'=>$this->name,'address'=>$this->address,'phone'=>$this->phone,'aemail'=>$this->adminemail,
+	  'cemail'=>$this->contactemail)));
+	 	  
+    }
+    else                                                #152
+    {
+	  $cxn = parent::getConnection("settings");
+	  $var=Settings::docsInCollection();
+	  $var++;
+  	  $this->id=strval($var) ;
+      $doc=array('setid'=>$this->id,'settingname'=>$this->name,'address'=>$this->address,'phone'=>$this->phone,'aemail'=>$this->adminemail,
+	  'cemail'=>$this->contactemail);
+
+	  $temp=$cxn->insert($doc);
+	  echo $temp;
+	  echo $this->id;
+    }
+
+          
+    return $this->id;
+  }
+
+
+}
+
+?>

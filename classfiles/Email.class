@@ -1,0 +1,69 @@
+<?php
+ /*  Class:  Email
+  *  Desc:   Stores an email message.
+  */
+  class Email
+  {
+     private $message;
+     private $addr;
+     private $subj;
+
+     function setMessage($message)
+     {
+        if(!is_string($message))
+            throw new Exception("Message must be a string");
+        else
+        {
+            $this->message = $message;
+            return TRUE;
+        }
+     }
+
+     function setAddr($addr)
+     {
+        if(!is_string($addr))
+        {
+            throw new Exception("Address must be a string.");
+            return FALSE;
+        }
+        else
+        {
+            $this->addr = $addr;
+            return TRUE;
+        }
+     }
+
+     function setSubj($subj)
+     {
+        if(!is_string($subj))
+            throw new Exception("Subject must be a string");
+        else
+        {
+            $this->subj = $subj;
+            return TRUE;
+        }
+     }
+
+     function sendEmail()
+     {
+	   if(!empty($this->subj) and                        #49
+          !empty($this->addr) and
+          !empty($this->message))
+       {
+		  $headers = "MIME-Version: 1.0\r\n";
+			$headers.= "Content-type: text/html; charset=iso-8859-1\r\n";
+			$headers.= "From: $from\r\n";
+		  if(!mail($this->addr,$this->subj,$this->message,$headers))
+            throw new Exception("Email could not be sent.");
+          else
+            return TRUE;
+       }
+       else                                              #58
+       {
+          throw new Exception("Subject, Address, and message
+                      are required. One or more is missing");
+          return FALSE;
+       }
+     }
+  }
+?>

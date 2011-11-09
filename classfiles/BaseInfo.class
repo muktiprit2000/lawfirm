@@ -1,0 +1,51 @@
+<?php
+ /* Name: BaseInfo.class
+  * Desc: Base Class from which the data objects can
+  *       extend.  The ID and name are common among
+  *       all the data objects.  Also, the database
+  *       connection can be obtained from this class.
+  */
+include_once("Database.class");
+
+class BaseInfo
+{
+  protected $id;
+  protected $name;
+  
+  function __construct($id, $name)
+  {    
+    $this->id = $id;
+    $this->name = $name;
+  }
+  
+  protected static function getConnection($coll)	//gives the database connection with given collection 
+  {
+    $db = new Database("../incfiles/Vars.inc");
+    $db->useDatabase("Law-FirmCMS");
+	$db->setCollection($coll);
+	return $db->getCollection();
+  }
+  
+  protected static function getgridConnection()		//gives the gridFS connection for storing files in database
+  {
+    $db = new Database("../incfiles/Vars.inc");
+    $db->useDatabase("Law-FirmCMS");
+	$db->setgridFS();
+	return $db->getgridFS();
+  }
+  
+  public function getId()
+  {
+    return $this->id;
+  } 
+  
+  public function getName()
+  {
+    return $this->name;
+  }
+  public function setName($name)
+  {
+    $this->name=$name;
+  }
+}
+?>

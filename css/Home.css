@@ -1,0 +1,146 @@
+﻿.BodyRegularFonts {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: small;
+	font-weight: normal;
+	font-style: normal;
+	color: #000000;
+}
+.BodyTitles {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	font-style: normal;
+	color:#996633;
+}
+.body{
+	
+	background-color:white;
+}
+.maintable{
+	
+	width:100%;
+	border-collapse:collapse;
+	border-color:gray;
+	
+}
+.sidebars{
+	width:10%;
+	background-color:#99CCFF;
+
+	
+}
+.webpage{
+width: 100%;
+border-style: solid;
+border-color: silver;
+text-align:center;
+margin-left:auto;
+margin-right:auto;
+}
+
+.sitelogo{
+	
+	width:70%;
+	
+}
+.address{
+
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:large;
+	font-style:normal;
+	color:black;
+}
+
+.navigation {
+width:100%;
+height:30px;
+background-color:#999;
+}
+
+.navigation ul
+{margin:0px; padding:0px; width:100%}
+
+.navigation ul li
+{display:inline; height:30px; float:left; list-style:none; margin-left:35px; vertical-align:middle; font-weight: bold;
+}
+
+
+.navigation li a
+{color:#fff; text-decoration:none;}
+
+.navigation li a:hover
+{text-decoration:underline;}
+
+.menuitemdescription {
+height:30px;
+font-family: Arial, Helvetica, sans-serif;
+font-size: medium;
+font-weight: bold;
+font-style: normal;
+color: #fff;
+background-color:#999;	
+	
+	
+}
+
+.leftnavigation{
+background-color:#999;
+width:100%;
+float:left;
+height:650px;
+
+}
+
+
+.leftnavigation dl
+{margin:0px; padding:0px; width:100%}
+
+.leftnavigation dl dt
+{display:inline; height:30px; float:left; list-style:none; margin-left:35px;}
+
+
+.leftnavigation dt a
+{color:#fff; text-decoration:none;}
+
+.leftnavigation dt a:hover
+{text-decoration:underline;}
+
+.leftlinks{
+	
+	width: 100%; height: 200px;
+
+}
+.maincontent{
+text-align:left;
+
+float:left;
+
+	
+}
+
+.rightcontent{
+	
+width:300px;
+margin-right:0px;
+	
+}
+
+.footer {
+width:100%;
+height:30px;
+background-color:#999;
+}
+
+.footer ul
+{margin:0px; padding:0px; width:100%}
+
+.footer ul li
+{display:inline; height:30px; float:left; list-style:none; margin-left:35px;}
+
+
+.footer li a
+{color:#fff; text-decoration:none;}
+
+.footer li a:hover
+{text-decoration:underline;}
+

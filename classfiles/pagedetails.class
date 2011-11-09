@@ -1,0 +1,274 @@
+<?php
+ /* Name: Department.class
+  * Desc: Class containing details for a department
+  *       and the content within the department.
+  */
+include_once("../classfiles/BaseInfo.class");
+
+class Pagedetail extends BaseInfo
+{
+  protected $pagetitle;                               #10
+  protected $description;
+  protected $metatitle;
+  protected $metakeys;
+  protected $metadesc;
+  protected $parId;
+  
+  function __construct($id, $name, $ptitle, $desc, $mtitle, $mkeys, $mdesc, $parid)
+  {
+     parent::__construct($id, $name);                   #14
+     $this->pagetitle= $ptitle;
+	 $this->description = $desc;
+	 $this->metatitle=$mtitle;
+	 $this->metakeys=$mkeys;
+	 $this->metadesc=$mdesc;
+	 $this->parId=$parid;
+	 }
+  
+ public function setDescription($desc)
+  {
+    $this->description = $desc;
+  }
+ public function getDescription()                      #18
+  {
+    return $this->description;
+  }
+ public function setPagetitle($ptitle)                      #18
+  {
+    $this->pagetitle=$ptitle;
+  }
+  public function getPagetitle()                      #18
+  {
+    return $this->pagetitle;
+  }
+  public function setMetatitle($mtitle)                      #18
+  {
+    $this->metatitle=$mtitle;
+  }
+  public function getMetatitle()                      #18
+  {
+    return $this->metatitle;
+  }
+  public function setMetakeys($mkeys)                      #18
+  {
+    $this->metakeys=$mkeys;
+  }
+  public function getMetakeys()                      #18
+  {
+    return $this->metakeys;
+  }
+   public function setMetadesc($mdesc)                      #18
+  {
+    $this->metadesc=$mdesc;
+  }
+   public function getMetadesc()                      #18
+  {
+    return $this->metadesc;
+  }
+   public function setParId($parid)                      #18
+  {
+    $this->parId=$parid;
+  }
+   public function getParId()                      #18
+  {
+    return $this->parId;
+  }
+  public static function findAllmain()                     
+  {
+    $cxn = parent::getConnection("pagecontent");                     #25
+    /*$sql = "SELECT dept_id, name, description
+              FROM Pagedetail
+             ORDER BY name";
+    $results = $cxn->query($sql);*/
+	//$results=$cxn->find();
+    $results=$cxn->find(array('parentid'=>"0"));
+	if (!$results)
+    {
+      throw new Exception("Problem getting data: ".
+                          $cxn->error);
+    }
+    $depts = array();
+	foreach ($results as $db) {
+            //print $db['name'];
+			$depts[] = new Pagedetail($db['pageid'], 
+        $db['pagename'], $db['pagebody'],$db['pagetitle'],$db['metatitle'],$db['metakeys'],$db['metadescription'],
+		$db['parentid']);
+        
+        }
+    
+    return $depts;                                     
+  }
+public static function findAll()                     
+  {
+    $cxn = parent::getConnection("pagecontent");                     #25
+    /*$sql = "SELECT dept_id, name, description
+              FROM Pagedetail
+             ORDER BY name";
+    $results = $cxn->query($sql);*/
+	$results=$cxn->find();
+    
+	if (!$results)
+    {
+      throw new Exception("Problem getting data: ".
+                          $cxn->error);
+    }
+    $depts = array();
+	foreach ($results as $db) {
+            //print $db['name'];
+			$depts[] = new Pagedetail($db['pageid'], 
+        $db['pagename'], $db['pagebody'],$db['pagetitle'],$db['metatitle'],$db['metakeys'],$db['metadescription'],
+		$db['parentid']);
+        
+        }
+    
+    return $depts;                                     
+  }
+   
+  public static function findById($id)                 
+  {
+    $cxn = parent::getConnection("pagecontent");
+    $result=$cxn->findOne(array('pageid'=>$id));
+    /*$sql = "SELECT dept_id, name, description
+            FROM Department
+            WHERE dept_id = $id";
+    $results = $cxn->query($sql);*/
+    
+    if (!$result)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+                
+    
+      return new Pagedetail($result['pageid'], 
+        $result['pagename'],$result['pagetitle'], $result['pagebody'],$result['metatitle'],$result['metakeys'],
+		$result['metadescription'],$result['parentid']);
+                                           
+  }
+  public static function findByName($pname)                 
+  {
+    $cxn = parent::getConnection("pagecontent");
+    $result=$cxn->findOne(array('pagename'=>$pname));
+    
+    
+    if (!$result)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+                
+    
+      return new Pagedetail($result['pageid'], 
+        $result['pagename'],$result['pagetitle'], $result['pagebody'],$result['metatitle'],$result['metakeys'],
+		$result['metadescription'],$result['parentid']);
+                                           
+  }
+  public static function findParentid($page_id)
+  {
+  $cxn = parent::getConnection("pagecontent");
+    $result=$cxn->findOne(array('parentid'=>$page_id));
+    /*$sql = "SELECT dept_id, name, description
+            FROM Department
+            WHERE dept_id = $id";
+    $results = $cxn->query($sql);*/
+    
+    if (!$result)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+                
+    
+      return new Pagedetail($result['pageid'], 
+        $result['pagename'],$result['pagetitle'], $result['pagebody'],$result['metatitle'],$result['metakeys'],
+		$result['metadescription'],$result['parentid']);
+                                           
+  }
+
+  
+  public static function findChildsBypId($id)
+  {
+  $cxn = parent::getConnection("pagecontent");
+    $results=$cxn->find(array('parentid'=>$id));
+      
+    if (!$results)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+     $depts = array();
+	foreach ($results as $db) {
+            print $db['name'];
+			$depts[] = new Pagedetail($db['pageid'], 
+        $db['pagename'], $db['pagebody'],$db['pagetitle'],$db['metatitle'],$db['metakeys'],$db['metadescription'],
+		$db['parentid']);
+        
+        }
+    
+    return $depts;  
+                                           
+  }
+  public static function docsInCollection()
+  {
+  $cxn = parent::getConnection("pagecontent");
+  $totdocs=$cxn->count();
+  return $totdocs;
+  }
+  public function save()	#140
+  {
+    if (isset($this->id))                               #142
+    {
+      $cxn = parent::getConnection("pagecontent");
+	  $cxn->update(array('pageid'=>$this->id),array('$set' => array('pagetitle'=>$this->pagetitle,'pagebody'=>$this->description,
+	  'metatitle'=>$this->metatitle, 'metakeys'=>$this->metakeys, 'metadescription'=>$this->metadesc,
+	  'parentid'=>$this->parId)));
+	 	  
+    }
+    else                                                #152
+    {
+	  $cxn = parent::getConnection("pagecontent");
+	  $var=Pagedetail::docsInCollection();
+	  $var++;
+  	  $this->id=strval($var) ;
+      $doc=array('pageid'=>$this->id,'pagename'=>$this->name,'pagetitle'=>$this->pagetitle,'pagebody'=>$this->description,
+	 			'metatitle'=>$this->metatitle, 'metakeys'=>$this->metakeys, 'metadescription'=>$this->metadesc,
+				'parentid'=>$this->parId);
+
+	  $temp=$cxn->insert($doc);
+	  echo $temp;
+	  echo $this->id;
+    }
+
+          
+    return $this->id;
+  }
+
+  public function delete()                              #174
+  {
+    if (!isset($this->id))
+      return;
+  
+    $cxn = parent::getConnection("pagecontent");
+	$temp= $this->id;
+	$results=$cxn->remove(array('pageid'=>$this->id));
+    if (!$results)
+    {
+      throw new Exception("Problem deleting data: " +
+                          $cxn->error);
+    }
+    $fcxn = parent::getgridConnection();   
+	
+    $results=$fcxn->remove(array('pageid'=>$temp));
+	
+    if (!$results)
+    {
+      throw new Exception("Problem deleting data: " +
+                          $cxn->error);
+    }                                                #188
+    echo "deleted";
+  }
+
+
+}
+
+?>

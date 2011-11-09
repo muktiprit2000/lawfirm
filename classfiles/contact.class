@@ -1,0 +1,99 @@
+<?php
+ /* Name: contact.class
+  * Desc: Class containing details for a client who submitted a contact us form
+  *       
+  */
+include_once("../classfiles/BaseInfo.class");
+
+class Contact extends BaseInfo
+{
+  protected $email;                               #10
+  protected $phone;
+  protected $subject;
+  protected $message;
+  protected $entrydate;
+  
+  function __construct($id, $name, $email, $phone, $sub, $mess, $date)
+  {
+  parent::__construct($id, $name);                   #14
+     $this->email= $email;
+	 $this->phone = $phone;
+	 $this->subject=$sub;
+	 $this->message=$mess;
+	 $this->entrydate=$date;
+	 
+	 }
+	 public function setEmail($email)                      #18
+  {
+    $this->email=$email;
+  }
+  public function getEmail()                      #18
+  {
+    return $this->email;
+  }
+  public function setdate($date)                      #18
+  {
+    $this->entrydate=$date;
+  }
+  public function getEntryDate()                      #18
+  {
+    return $this->entrydate;
+
+  }
+public static function findAll()                     
+  {
+    $cxn = parent::getConnection("contactus");                     #25
+    
+	$results=$cxn->find();
+    
+	if (!$results)
+    {
+      throw new Exception("Problem getting data: ".
+                          $cxn->error);
+    }
+    $depts = array();
+	foreach ($results as $db) {
+		
+        $depts[] = new Contact($db['contactid'], 
+        $db['name'], $db['email'],$db['phone'],$db['subject'],$db['message'],date('Y-M-d', $db['entrydate']->sec));
+        
+        }
+    
+    return $depts;                                     
+  }
+	 
+public static function docsInCollection()
+  {
+  $cxn = parent::getConnection("contactus");
+  $totdocs=$cxn->count();
+  return $totdocs;
+  }
+ public function save()	#140
+  {
+    if (isset($this->id))                               #142
+    {
+      $cxn = parent::getConnection("contactus");
+	  
+	  $cxn->update(array('contactid'=>$this->id),array('$set' => array('contactid'=>$this->id,'name'=>$this->name,'email'=>$this->email,'phone'=>$this->phone,
+	 			'subject'=>$this->subject, 'message'=>$this->message, 'entrydate'=>new MongoDate())));
+	 	  
+    }
+    else                                                #152
+    {
+	  $cxn = parent::getConnection("contactus");
+	  $var=Contact::docsInCollection();
+	  $var++;
+  	  $this->id=strval($var) ;
+	  
+      $doc=array('contactid'=>$this->id,'name'=>$this->name,'email'=>$this->email,'phone'=>$this->phone,
+	 			'subject'=>$this->subject, 'message'=>$this->message, 'entrydate'=>new MongoDate());
+
+	  $temp=$cxn->insert($doc);
+	  $this->id;
+    }
+
+          
+    return $this->id;
+  }
+  }
+  ?>

@@ -1,0 +1,157 @@
+<?php
+ /* Name: ContentDownload.class
+  * Desc: Class containing details for a 
+  *       content item's downloadable file.
+  */
+include_once("BaseInfo.class");
+
+class ContentDownload extends BaseInfo                  
+{
+	protected $page_id;
+	
+  function __construct($pid, $fid, $fname )
+  {    
+     parent::__construct($fid, $fname);                   #14
+     $this->page_id= $pid;
+	
+  }
+   public function setpageId($pid)                      #18
+  {
+    $this->page_id=$pid;
+  }
+   public function getPageId()                      #18
+  {
+    return $this->page_id;
+  }
+  public static function findByContentId($id)   #10
+  {
+    $ret_arr = array();                                 
+    
+    $cxn = parent::getConnection("content_download");             
+    $results=$cxn->find(array('pageid'=>$id));	
+   
+    if (!$results)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+		
+    $files= array();
+	foreach ($results as $db) {
+            print $db['name'];
+			$files[] = new ContentDownload($db['downloadId'],$db['filename']);
+        
+        }
+    
+    return $files;  
+  }
+
+  public static function findById($file_id)             #36
+  {
+    
+    $cxn = parent::getConnection("content_download");
+	$result=$cxn->findOne(array('imagename'=>$file_id));
+    
+    if (!$result)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+    
+      return new ContentDownload($result['downloadId'], $result['filename']);
+    
+  }
+  public static function findByIdContforP($sid,$fid)             #36	//for page content
+  {
+        
+    $cxn = parent::getConnection("content_download");
+	 //MongoGridFSFile dbFile = $cxn->findOne(array('setid'=>$sid,'fileId'=>$fid)); 
+	$result=$cxn->findOne(array('pageid'=>$sid,'fileId'=>$fid));
+    
+    if ($result)
+    {
+	
+    return $result['fileName']; 
+    }
+     else
+      //return new ContentDownload($result['fileId'], $result['fname'],$result['setid']);
+	  return NULL;
+    }
+
+  
+   public static function findByIdContforS($sid,$fid)             #36	//for site settings
+  {
+        
+    $cxn = parent::getConnection("content_download");
+	 //MongoGridFSFile dbFile = $cxn->findOne(array('setid'=>$sid,'fileId'=>$fid)); 
+	$result=$cxn->findOne(array('setid'=>$sid,'fileId'=>$fid));
+    
+    if ($result)
+    {
+	
+    return $result['fileName']; 
+    }
+     else
+      //return new ContentDownload($result['fileId'], $result['fname'],$result['setid']);
+	  return NULL;
+    }
+
+  public function save()      #61	//function to save files for content management
+  {
+	$cxn = parent::getConnection("content_download");
+	$file = $cxn->findOne(array("pageid"=>$this->page_id,"fileId" => $this->id));
+	
+
+	if ($file)
+	{
+		
+		$var=$cxn->remove(array("pageid"=>$this->page_id,"fileId" => $this->id));
+		echo "remove";
+	}	
+		
+	
+    
+	$id = $cxn->insert(array("pageid"=>$this->page_id,"fileId" => $this->id,'fileName'=>$this->name));
+	
+	       
+    return $this->id;
+  }
+	
+	public function savesettings()      #61	//function to save files for site settings
+  {
+	$cxn = parent::getConnection("content_download");
+	$file = $cxn->findOne(array("setid"=>$this->page_id,"fileId" => $this->id));
+	
+
+	if ($file)
+	{
+		
+		$var=$cxn->remove(array("setid"=>$this->page_id,"fileId" => $this->id));
+		echo "remove";
+	}	
+		
+	
+   
+	$id = $cxn->insert(array("setid"=>$this->page_id,"fileId" => $this->id,'fileName'=>$this->name));
+	
+	
+	       
+    return $this->id;
+  }
+   
+  public function delete()                              #79
+  {
+        
+    $cxn = parent::getConnection("content_download");
+    $result=$cxn->remove(array('setid'=>$this->page_id,"fileId" => $this->id));
+	
+    if (!$result)
+    {
+      throw new Exception("Problem deleting data: " +
+                          $cxn->error);
+    }                                                #188
+    echo "deleted";
+  }
+        
+}
+?>

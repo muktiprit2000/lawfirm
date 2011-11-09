@@ -1,0 +1,147 @@
+<?php
+ /*  Class:  Account
+  *  Desc:   A user account stored in a database. Represents
+  *          the account information stored in one record 
+  *          in a table.
+  */
+class Account
+{
+    private $userID = NULL;  
+    private $cxn; 
+    private $table_name; 
+	private $collection;
+    private $message;  
+
+    function __construct( mongodb $cxn,$db,$table)
+    {
+	   //echo "please..";
+      $this->cxn =$cxn;
+	  //$cxn->selectDB($db);
+	  //echo "please..";
+	  //echo $this->cxn;
+      if(is_string($table))                              #17
+      {
+        //$sql = "SHOW TABLES LIKE '$table'";              #19
+        //$result = $this->cxn->query($sql);
+        $list = $this->cxn->listCollections();
+		//echo $list;
+		//echo "asdsa:";
+		//echo $this->cxn->$table;
+		if(in_array($this->cxn->$table,$list))                       #21
+        {
+          //echo "some..";
+		  $this->table_name = $table;
+		  $this->collection=$this->cxn->selectCollection($this->table_name);
+		  
+        }
+        else                                             #25
+        {
+          throw new Exception("$table is not a table 
+                                in the database");
+          return FALSE;
+        }
+      }
+      else                                               #32
+      {
+        throw new Exception("Second parameter is not a 
+                              valid table name");
+        return FALSE;
+      }
+    }
+
+    function selectAccount($userID)
+    {
+      $userID = trim($userID);                           #42
+      //$sql = "SELECT user_name FROM $this->table_name 
+       //       WHERE user_name ='$userID'";              #44
+	   //echo "all is well";
+	   //echo $this->collection;
+	   $result=$this->collection->findOne(array('user_name'=>$userID));
+	  //echo $result['user_name'];
+      //echo "sada";
+      if(empty($result))                         #51
+      {
+        $this->message = "Account $userID 
+                          does not exist!";
+        return FALSE;
+      }
+      else                                               #57
+      {
+        $this->userID = $userID;
+        return TRUE;
+      }
+      
+    }
+
+    function comparePassword($form_password)
+    {
+      if(!isset($this->userID))                          #66
+      {
+        throw new Exception("No account currently selected");
+        exit();
+      }                                                  #70
+      //$sql = "SELECT user_name FROM $this->table_name
+       //       WHERE user_name ='$this->userID' AND
+         //           password = md5('$form_password')";
+	
+      $result=$this->collection->findOne(array('user_name'=>$this->userID,'password'=>md5($form_password)));             #74
+      //echo $result['password'];
+      if(empty($result))                         #80
+      {
+        $this->message  = "Incorrect password for 
+                           account $this->userID!";
+        return FALSE;
+      }
+      else                                            #86
+        return TRUE;
+    }
+
+    function getMessage()
+    {
+       return $this->message;
+    }
+    function getCollection()
+	{
+		return $this->collection;
+	}
+    function createNewAccount($data)
+    {
+       if(!is_array($data))                              #97
+       {
+          throw new Exception("Data must be in an array.");
+          return FALSE;
+       }
+       foreach($data as $field => $value)               #102
+       {
+          if($field != "password" and $field != "Button") 
+          {
+             $fields[] = $field;
+             $values[] = addslashes($value);
+          }
+       }
+       $str_fields = implode($fields,",");              #110
+	   echo $fields[0];
+       $str_values = '"'.implode($values,'","');        #111
+       $today = date("Y-m-d");                          #112
+       $str_fields .=",create_date";
+       $str_fields .=",password";
+       $str_values .="\",\"$today";
+       $pass=md5($data['password']); 
+	   $doc=array($fields[0]=>$values[0],'password'=>$pass, $fields[2]=>$values[2],$fields[3]=>$values[3],$fields[4]=>$values[4],'date_created'=>new MongoDate());
+       $res=$this->collection->insert($doc);
+       /*if(!res)                     #119
+       { 
+          throw new Exception("Can't execute query: ");
+          return FALSE;
+       }
+       else                                               
+       {*/
+          return TRUE;
+       //}
+    }
+	
+	
+	
+
+ } 
+?>

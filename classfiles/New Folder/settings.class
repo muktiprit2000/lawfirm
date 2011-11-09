@@ -1,0 +1,149 @@
+<?php
+ /* Name: Department.class
+  * Desc: Class containing details for a department
+  *       and the content within the department.
+  */
+include_once("../classfiles/BaseInfo.class");
+
+class Settings extends BaseInfo
+{
+  protected $address;   #10
+  protected $phone;
+  protected $adminemail;
+  protected $contactemail;
+ 
+  
+  function __construct($id, $name, $img1,$add, $phone, $aemail, $cemail,$img2,$img3)
+  {
+     parent::__construct($id, $name);    	 #14
+	 $this->img1=$img1;
+     $this->address= $add;
+	 $this->phone= $phone;
+	 $this->adminemail = $aemail;
+	 $this->contactemail =$cemail;
+	 $this->img2=$img2;
+	 $this->img3=$img3;
+	 }
+  
+ public function setAddress($add)
+  {
+    $this->address = $add;
+  }
+ public function getAddress()                      #18
+  {
+    return $this->address;
+  }
+  public function setImage1($img)
+  {
+    $this->img1 = $img;
+  }
+ public function getImage1()                      #18
+  {
+    return $this->img1;
+  }
+  public function setImage2($img)
+  {
+    $this->img2 = $img;
+  }
+ public function getImage2()                      #18
+  {
+    return $this->img2;
+  }
+ public function setImage3($img)
+  {
+    $this->img3 = $img;
+  }
+ public function getImage3()                      #18
+  {
+    return $this->img3;
+  }
+  public function setPhone($phone)
+  {
+    $this->phone = $phone;
+  }
+ public function getPhone()                      #18
+  {
+    return $this->phone;
+  }
+  
+ public function setAdminemail($aemail)                      #18
+  {
+    $this->adminemail=$aemail;
+  }
+  public function getAdminemail()                      #18
+  {
+    return $this->adminemail;
+  }
+  public function setContemail($cemail)                      #18
+  {
+    $this->contactemail=$cemail;
+  }
+  public function getContemail()                      #18
+  {
+    return $this->contactemail;
+  }
+
+  public static function findById($id)                 
+  {
+    $cxn = parent::getConnection("settings");
+    $result=$cxn->findOne(array('setid'=>$id));
+        
+    if (!$result)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+                
+    
+      return new Settings($result['setid'], $result['settingname'], $result['sitelogoImage'],
+        $result['address'],$result['phone'], $result['aemail'], $result['cemail'],$result['midImage'],$result['leftImage']);
+                                           
+  }
+                                       
+  public static function docsInCollection()
+  {
+  $cxn = parent::getConnection("settings");
+  $totdocs=$cxn->count();
+  return $totdocs;
+  }
+  public function save()	#140
+  {
+    if (isset($this->id))                               #142
+    {
+      $cxn = parent::getConnection("settings");
+	  $cxn->update(array('setid'=>$this->id),array('$set' => array('settingname'=>$this->name,'sitelogoImage'=>$this->img1,'address'=>$this->address,'phone'=>$this->phone,'aemail'=>$this->adminemail,
+	  'cemail'=>$this->contactemail,'midImage'=>$this->img2,'leftImage'=>$this->img3)));
+	 	  
+    }
+    else                                                #152
+    {
+	  $cxn = parent::getConnection("settings");
+	  $var=Settings::docsInCollection();
+	  $var++;
+  	  $this->id=strval($var) ;
+      $doc=array('setid'=>$this->id,'settingname'=>$this->name,'sitelogoImage'=>$this->img1,'address'=>$this->address,'phone'=>$this->phone,'aemail'=>$this->adminemail,
+	  'cemail'=>$this->contactemail,'midImage'=>$this->img2,'leftImage'=>$this->img3);
+
+	  $temp=$cxn->insert($doc);
+	  echo $temp;
+	  echo $this->id;
+    }
+
+          
+    return $this->id;
+  }
+
+public function delete($fid)
+{
+$cxn = parent::getConnection("settings");
+if($fid==1)
+ $cxn->update(array('setid'=>$this->id),array('$set' => array('sitelogoImage'=>null)));
+if($fid==2)
+ $cxn->update(array('setid'=>$this->id),array('$set' => array('midImage'=>null)));
+if($fid==3)
+ $cxn->update(array('setid'=>$this->id),array('$set' => array('leftImage'=>null)));
+}
+
+}
+
+?>

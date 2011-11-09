@@ -1,0 +1,103 @@
+<?php
+ /*  Class:  Database
+  *  Desc:   Class that connects to a MySQL database.
+  */
+class Database
+{
+  private $cxn;             // database connection object
+  private $database_name;
+  private $db;
+  private $host;
+  private $user;
+  private $password;
+  private $collection;
+  private $grid;
+  
+  function __construct($filename)	//connect to mongo database  
+  {
+    include("$filename");		//file from the valid user data come from to longin to the perticular database in mongo
+     try {
+      $this->cxn = new Mongo("mongodb://{$user}:{$passwd}@{$host}/$database");
+      
+    }
+    catch ( Exception $e ) {
+      throw new Exception ( "Oops! Error connecting to MongoDB: " . $e->getMessage() );
+   }
+    $this->host = $host;   	#25
+	
+    $this->user = $user;
+	
+    $this->password = $passwd;
+	
+  }
+
+  function useDatabase($dbname)	//	use selected database 
+  {
+    if(!$result = $this->cxn->listDBs())  #32
+    {        
+      throw new Exception("Database is not available. 
+                           Try again later");
+      email("dbadmin@ourplace.com","DB Problem",
+         "MONGODB server is not responding. ");
+      exit();
+    }
+    else                                                #41
+    {
+      	foreach ($result['databases'] as $db) {
+            //print $db['name'];
+			$database[] = $db['name'];
+        }
+
+    }
+    if(in_array($dbname,$database) ||
+       in_array(strtolower($dbname),$database))        #49	//try to find selected database in list og all the databases in mongo
+    {
+	  //echo "wow..";
+      $this->database_name = $dbname;
+      $this->db= $this->cxn->selectDB($dbname);
+      return TRUE;
+	  
+    }
+    else                                                #55
+    {
+      throw new Exception("Database $dbname not found.");
+      return FALSE;
+    }
+  }
+  
+  function setCollection($colle)		//set the perticulr collection
+  {
+	 $this->collection=$this->db->selectCollection($colle);
+	 //echo $this->collection;
+	 }
+  function getCollection()
+  {
+	return $this->collection;
+   }
+  function getdbConnection()
+  {
+	return $this->db;
+  }
+  function getConnection()
+  {
+     return $this->cxn;
+  }
+  function setgridFS()
+  {
+	$this->grid=$this->db->getGridFS();
+  }
+  function getgridFS()
+  {
+	return $this->grid;
+  }
+  function getDatabaseName()
+  {
+     return $this->database_name;
+  }
+  function shutdown()	//close the database connection
+    {
+        $this->db = null;
+        $this->cxn->close();
+    }
+}
+?>

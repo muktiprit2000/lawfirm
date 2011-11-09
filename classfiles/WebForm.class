@@ -1,0 +1,224 @@
+<?php
+ /*  Class:  WebForm
+  *  Desc:   Class that collects, stores, and processes 
+  *          information in an HTML form.
+  */
+
+class WebForm
+{
+  private $form;           //filename
+  private $fields;         //filename
+  private $data;           //array
+  private $not_required;   //array
+
+  function __construct($form,$fields,$data=NULL)
+  {
+     if(is_string($form) and is_string($fields))       #16
+     {  
+        $this->form = $form;
+        $this->fields = $fields;
+     }
+     else                                              #21
+     {
+        throw new Exception("First 2 parameters 
+                             must be filenames");
+     }
+     if($data == NULL OR is_array($data))              #26
+     {
+        $this->data = $data;
+     }
+     else                                              #30
+     {
+        throw new Exception("Form data must be passed 
+                             in an array");
+     }
+  }
+
+  function setFieldsNotRequired($not_required)         #37
+  {
+     if(!is_array($not_required))
+     {
+        throw new Exception("Fields must be passed 
+                             in an array");
+     }
+     else
+     {
+        $this->not_required = $not_required;
+     }
+  } 
+
+  function displayForm()
+  {
+     @extract($this->data);
+     include($this->fields);
+     include($this->form);
+  }
+
+  function getAllFields()
+  {
+      return $this->data;
+  }
+
+  function checkForBlanks()
+  {
+     if(sizeof($this->data) < 1 )                      #64
+          throw new Exception("No form data available");
+
+     foreach($this->data as $key => $value)            #67
+     {
+        if($value == "")                               #69
+        {
+           $match = false;
+           if(is_array($this->not_required))           #72
+           {
+              foreach($this->not_required as $field)   #74
+              {
+                 if($field == $key)
+                 {
+                     $match = true;
+                 }
+              }
+           }
+           if(!$match)                          #82
+           {
+              $blanks[] = $key;
+           }
+        }
+      }
+      if(isset($blanks))                               #88
+          return $blanks;
+      else
+          return TRUE;
+  } 
+
+  function verifyData()
+  {
+     if(sizeof($this->data) < 1 )                      #96
+          throw new Exception("No form data available.");
+     foreach($this->data as $key => $value)            #98
+     {
+        if(!empty($value))                            #100
+        {
+          if(eregi("name",$key) and !eregi("log",$key) 
+             and !eregi("user",$key))                 #103
+          {
+            $result = $this->checkName($value);       #105
+            if(is_string($result))
+                $errors[$key] = $result;              #107
+          }                                           #108
+          if(eregi("addr",$key)or eregi("street",$key)
+             or eregi("city",$key))                   #110
+          {
+            $result = $this->checkAddress($value);
+            if(is_string($result))
+               $errors[$key] = $result;
+          }
+          if(eregi("email",$key))                     #116
+          {
+            $result = $this->checkEmail($value);
+            if(is_string($result))
+               $errors[$key] = $result;
+          }
+          if(eregi("phone",$key)or ereg("fax",$key))  #122
+          {
+            $result = $this->checkPhone($value);
+            if(is_string($result))
+               $errors[$key] = $result;
+          }       
+          if(eregi("zip",$key))                       #128
+          {
+            $result = $this->checkZip($value);
+            if(is_string($result))
+               $errors[$key] = $result;
+          }
+          if(eregi("state",$key))                       #134
+          {
+            $result = $this->checkState($value);
+            if(is_string($result))
+               $errors[$key] = $result;
+          }
+        }
+     }
+     if(isset($errors))                               #142
+          return $errors;
+     else
+          return TRUE;
+  }
+
+  function trimData()
+  {
+     foreach($this->data as $key => $value)
+     {
+        $data[$key] = trim($value);
+     }
+     $this->data = $data;
+  }
+
+  function stripTagsFromData()
+  {
+     foreach($this->data as $key => $value)
+     {
+        $data[$key] = strip_tags($value);
+     }
+     $this->data = $data;
+  }
+
+  function checkName($field)
+  {
+     if(!ereg("^[A-Za-z' -]{1,50}$",$field))
+     {
+        return "$field is not a valid name. 
+                  Please try again.";
+     }
+     else
+        return TRUE;
+  }
+
+  function checkAddress($field)
+  {
+     if(!ereg("^[A-Za-z0-9.,' -]{1,50}$",$field))
+     {
+        return "$field is not a valid address. 
+                 Please try again.";
+     }
+     else
+        return TRUE;
+  }
+
+  function checkZip($field)
+  {
+     if(!ereg("^[0-9]{5}(\-[0-9]{4})?",$field))
+        return "$field is not a valid zip code. 
+                   Please try again.";
+     else
+        return TRUE;
+  }
+
+  function checkPhone($field)
+  {
+     if(!ereg("^[0-9)(Xx -]{7,20}$",$field))
+        return "$field is not a valid phone number. 
+                   Please try again.";
+     else
+        return TRUE;
+  }
+
+  function checkEmail($field)
+  {
+     if(!ereg("^.+@.+\\..+$",$field))
+        return "$field is not a valid email address.
+                  Please try again.";
+     else
+        return TRUE;
+  }
+
+  function checkState($field)
+  {
+     if(!ereg("^[A-Za-z]",$field))
+        return "$field is not a valid state.
+                  Please try again.";
+     else
+        return TRUE;
+  }
+}
+?>
