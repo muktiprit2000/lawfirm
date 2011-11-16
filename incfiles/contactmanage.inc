@@ -4,14 +4,14 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <title>Untitled 1</title>
-<link href="../css/masteradmin.css" rel="stylesheet" type="text/css" />
+<link href="http://lawfirm-admin.orchestra.io/css/masteradmin.css" rel="stylesheet" type="text/css" />
 
 
 </head>
 
 <body>
 
-
+<form method="post" action="contactadmin.php">
 <table class="maintable">
 	<tr>
 		<td><p class="BodyTitles">Administrator Area</p></td>
@@ -34,6 +34,7 @@
 								<dl style="width: 166px; height: 160px">
 				                      &nbsp;<span class="BodyText"><dt style="width: 160px"><a href="contentmain1.php"">Content Management</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="sitesettings.php">Site Setting</a></dt></span>
+				                      &nbsp;<span class="BodyText"><dt><a href="contactmanage.php">Contact Us</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/EquitableDistribution/">Roles</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/Alimony/">User</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="logout.php">Logout</a></dt></span>
@@ -46,14 +47,17 @@
 
 						
 					</div>
-			
+					<br/>
+					<br/>
+					<br/>
+
 				</td>
-				<form method="post" action="contactadmin.php">
+				
 				<td class="maintable" valign="top">
 					<div >
 						<br/>
 						<br/>
-						<p class="BodyTitles">Content Management</p>
+						<p class="BodyTitles">Contact Management</p>
 						<br/>
 					</div>
 					<div>
@@ -77,25 +81,25 @@
 							 	$col++;
 							 	}
 								echo "<tr>"
-							."<td class=\"BodyRegularFonts\"align=\"center\"><a href=\"../visitorinfo.inc\">".$valuetemp[1]."</a></td>"
+							."<td class=\"BodyRegularFonts\"align=\"center\"><a href=\"".$valuetemp[5]."\">".$valuetemp[1]."</a></td>"
 							."<td class=\"BodyRegularFonts\" align=\"center\">".$valuetemp[2]."</td>"
 							."<td class=\"BodyRegularFonts\" align=\"center\">".$valuetemp[3]."</td>"
-							."<td > <input id=\"dgContact_ctl02_chkdelete\" type=\"checkbox\" name=\"deletecontact\" /></td>"
-							
-		                     ."</tr>\n";
-						    
+							."<td > <input type=\"checkbox\" name=\"deletecontact[]\" value=\"".$valuetemp[4]."\" /></td>"
+							."</tr>\n";
+		                    
+						    //echo "<input name=\"contactdelete\" value=\"".$valuetemp[4]."\" type=\"hidden\" />";
 							}
-						?>
+						 ?>
 						</table>
 					
 					</div>
 					<div align="center">
-	                    <input name="AllProdId" type="hidden" id="AllProdId" /><br>
-	                    <input type="submit" name="action" value="Update" id="btnUpdate" class="but" />
+	                    
+	                    <input type="submit" name="action" value="Update" />
 	                </div>
 	
 				</td>
-				</form>
+				
 			</tr>
 		</table>
 			
@@ -105,7 +109,7 @@
 
 </table>
 
-
+</form>
 </body>
 
 </html>

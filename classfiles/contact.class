@@ -40,6 +40,24 @@ class Contact extends BaseInfo
     return $this->entrydate;
 
   }
+   public function setPhone($phone)                      #18
+  {
+    $this->phone=$phone;
+  }
+  public function getPhone()                      #18
+  {
+    return $this->phone;
+  }
+   
+  
+  public function getsubject()                      #18
+  {
+    return $this->subject;
+  }
+  public function getMessage()                      #18
+  {
+    return $this->message;
+  }
 public static function findAll()                     
   {
     $cxn = parent::getConnection("contactus");                     #25
@@ -62,6 +80,22 @@ public static function findAll()
     return $depts;                                     
   }
 	 
+	 public static function findById($id)                 
+  {
+    $cxn = parent::getConnection("contactus");
+    $result=$cxn->findOne(array('contactid'=>strval($id)));
+       
+    if (!$result)
+    {
+      throw new Exception("Problem getting data: " +
+                          $cxn->error);
+    }
+                
+    
+      return new Contact($result['contactid'], 
+        $result['name'],$result['email'], $result['phone'],$result['subject'],$result['message'],$result['entrydate']);
+                                           
+  }
 public static function docsInCollection()
   {
   $cxn = parent::getConnection("contactus");
@@ -95,5 +129,24 @@ public static function docsInCollection()
           
     return $this->id;
   }
+  public function delete()                              #174
+  {
+    if (!isset($this->id))
+      return;
+  
+    $cxn = parent::getConnection("contactus");
+	$temp= $this->id;
+	$results=$cxn->remove(array('contactid'=>$this->id));
+    if (!$results)
+    {
+      throw new Exception("Problem deleting data: " +
+                          $cxn->error);
+    }
+                         #188
+    echo "deleted";
   }
+
+
+}
+
   ?>

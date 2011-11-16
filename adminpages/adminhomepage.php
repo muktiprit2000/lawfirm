@@ -3,7 +3,7 @@ require_once("../classfiles/Session.class");
 $sess=new Session();
 if($sess->getVariable("auth")!="yes")
 {
-	header("Location: login-OO.php");
+	header("Location: index.php");
 	exit();
 }
 ?>

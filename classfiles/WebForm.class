@@ -99,39 +99,39 @@ class WebForm
      {
         if(!empty($value))                            #100
         {
-          if(eregi("name",$key) and !eregi("log",$key) 
-             and !eregi("user",$key))                 #103
+          if(preg_match("/name/i",$key) and !preg_match("/log/i",$key) 
+             and !preg_match("/user/i",$key))                 #103
           {
             $result = $this->checkName($value);       #105
             if(is_string($result))
                 $errors[$key] = $result;              #107
           }                                           #108
-          if(eregi("addr",$key)or eregi("street",$key)
-             or eregi("city",$key))                   #110
+          if(preg_match("/addr/i",$key)or preg_match("/street/i",$key)
+             or preg_match("/city/i",$key))                   #110
           {
             $result = $this->checkAddress($value);
             if(is_string($result))
                $errors[$key] = $result;
           }
-          if(eregi("email",$key))                     #116
+          if(preg_match("/email/i",$key))                     #116
           {
             $result = $this->checkEmail($value);
             if(is_string($result))
                $errors[$key] = $result;
           }
-          if(eregi("phone",$key)or ereg("fax",$key))  #122
+          if(preg_match("/phone/",$key)or preg_match("/fax/",$key))  #122
           {
             $result = $this->checkPhone($value);
             if(is_string($result))
                $errors[$key] = $result;
           }       
-          if(eregi("zip",$key))                       #128
+          if(preg_match("/zip/",$key))                       #128
           {
             $result = $this->checkZip($value);
             if(is_string($result))
                $errors[$key] = $result;
           }
-          if(eregi("state",$key))                       #134
+          if(preg_match("/state/i",$key))                       #134
           {
             $result = $this->checkState($value);
             if(is_string($result))
@@ -165,7 +165,7 @@ class WebForm
 
   function checkName($field)
   {
-     if(!ereg("^[A-Za-z' -]{1,50}$",$field))
+     if(!preg_match("/^[A-Za-z' -]{1,50}$/i",$field))
      {
         return "$field is not a valid name. 
                   Please try again.";
@@ -176,7 +176,7 @@ class WebForm
 
   function checkAddress($field)
   {
-     if(!ereg("^[A-Za-z0-9.,' -]{1,50}$",$field))
+     if(!preg_match("^[A-Za-z0-9.,' -]{1,50}$",$field))
      {
         return "$field is not a valid address. 
                  Please try again.";
@@ -187,7 +187,7 @@ class WebForm
 
   function checkZip($field)
   {
-     if(!ereg("^[0-9]{5}(\-[0-9]{4})?",$field))
+     if(!preg_match("/^[0-9]{5}(\-[0-9]{4})?/",$field))
         return "$field is not a valid zip code. 
                    Please try again.";
      else
@@ -196,7 +196,7 @@ class WebForm
 
   function checkPhone($field)
   {
-     if(!ereg("^[0-9)(Xx -]{7,20}$",$field))
+     if(!preg_match("/^[0-9)(Xx -]{7,20}$/",$field))
         return "$field is not a valid phone number. 
                    Please try again.";
      else
@@ -205,7 +205,7 @@ class WebForm
 
   function checkEmail($field)
   {
-     if(!ereg("^.+@.+\\..+$",$field))
+     if(!preg_match("/^.+@.+\\..+$/i",$field))
         return "$field is not a valid email address.
                   Please try again.";
      else
@@ -214,7 +214,7 @@ class WebForm
 
   function checkState($field)
   {
-     if(!ereg("^[A-Za-z]",$field))
+     if(!preg_match("/^[A-Za-z]/i",$field))
         return "$field is not a valid state.
                   Please try again.";
      else

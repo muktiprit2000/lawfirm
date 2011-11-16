@@ -1,33 +1,19 @@
 <?php
    /*Displays a Web page that has four levels:
-   *          1) the home page, 2) a department page, 3) a
-   *          content list page, and 4) a detail page.
+   *          1) content management(home), 2) edit 3) Manage and 4) add a web page.
    */
 
 require_once("../classfiles/Session.class");
 include_once("../classfiles/ContentDownload.class");
-
+include_once("../classfiles/pagedetails.class"); 
 $sess=new Session();
 if($sess->getVariable("auth")!="yes")
 {
-	header("Location: login-OO.php");
+	header("Location: index.php");
 	exit();
 }
 
-include_once("../classfiles/pagedetails.class");                       #11
-//include_once("ContentType.class");
-//include_once("ContentItem.class");
-//include_once("ContentDownload.class");                  #14
-$page=array();
-/*$page = array(
-  "title"          => "The Company Intranet",
-  "header"         => "The Company Intranet",
-  "bottom"         => "Copyright(R) 2011",
-  "page_links" => array(),
-  "body_links"     => array(),
-  "col_headers"    => array(),
-  "data_rows"      => array(),
-);*/
+//$page=array();
 $links=array(array());
 $admin = FALSE;
 $base_url = "contentmain1.php";
@@ -55,13 +41,11 @@ $trail = "<a href='$base_url'>Content Management</a>";
 	      {
 	        $links[$row]['name']=$pagedetail->getName();
 	         
-	         // echo $links['editlink'];
-			$links[$row]['managelink']="$base_url?par_id=" . $pagedetail->getId()
+	        $links[$row]['managelink']="$base_url?par_id=" . $pagedetail->getId()
 	          . "&browse_level=manage"; 
 			$links[$row]['editlink']="$base_url?page_id=" . $pagedetail->getId()
 	          . "&browse_level=edit";
-	        
-	        //echo $links['name'];
+	        	       
 	        $row++;
 	        
 	      }
@@ -75,15 +59,15 @@ $trail = "<a href='$base_url'>Content Management</a>";
 	  		$pagedetail = Pagedetail::findById($page_id);
 	  		$parid=$pagedetail->getParId();
 	  		$pagename=$pagedetail->getName();
-	  		//echo $pagedetail->getName();
+	  		
 	  		$pagetitle=$pagedetail->getPagetitle();
-	  		//echo $pagetitle;
+	  		
 	  		$description=$pagedetail->getDescription();
-	  		//echo $description;
+	  		
 	  		$metatitle=$pagedetail->getMetatitle();
-	  		//echo $metatitle;
+	  		
 	  		$metakeys=$pagedetail->getMetakeys();
-	  		//echo $metakeys;
+	  		
 	  		$metadesc=$pagedetail->getMetadesc();
 	  		$cd= new ContentDownload("1","1","asdsa");
 			$fname1=$cd->findByIdContforP($page_id,"1");
@@ -116,8 +100,8 @@ $trail = "<a href='$base_url'>Content Management</a>";
 	        $links[$row]['name']=$pagedetail->getName();
 	        $links[$row]['editlink']="$base_url?page_id=" . $pagedetail->getId()
 	          . "&browse_level=edit";	        
-			$links[$row]['deletelink']= "$base_url?page_id=" . $pagedetail->getId()
-	          . "&browse_level=delete"; 
+			$links[$row]['pageid']= $pagedetail->getId();
+	          
 	        
 			$row++;
 	         
@@ -141,7 +125,7 @@ $trail = "<a href='$base_url'>Content Management</a>";
 	
 	case "delete":
 			$pageid=$_GET['page_id'];
-			echo $pageid;
+			//echo $pageid;
 			echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"Admin-OO.php\">";
 			echo "<input type=\"hidden\" name=\"pageid\" value=\"$pageid\" />";		
 			echo "<input type=\"submit\" name=\"action\" value=\"delete\" />";  
@@ -152,15 +136,14 @@ $trail = "<a href='$base_url'>Content Management</a>";
   	case "add":
   			
   			$parid=$_GET['par_id'];
-  			//$page_id=Pagedetail::docsInCollection();
-  			//$page_id++;
-  			//echo $page_id;
-	  		$pagename="";
+			$page_id=NULL;
+  			$pagename="Adding sub page...";
 	  		$pagetitle="";
 	  		$description="";
 	  		$metatitle="";
 	  		$metakeys="";
 	  		$metadesc="";
+	  		
 	  		include("../incfiles/compdetail-OO.inc");
 			break;	
 

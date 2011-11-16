@@ -12,24 +12,19 @@ class Account
 	private $collection;
     private $message;  
 
-    function __construct( mongodb $cxn,$db,$table)
+    function __construct( mongodb $cxn,$table)
     {
-	   //echo "please..";
+	   
       $this->cxn =$cxn;
-	  //$cxn->selectDB($db);
-	  //echo "please..";
-	  //echo $this->cxn;
+	 
       if(is_string($table))                              #17
       {
-        //$sql = "SHOW TABLES LIKE '$table'";              #19
-        //$result = $this->cxn->query($sql);
+        
         $list = $this->cxn->listCollections();
-		//echo $list;
-		//echo "asdsa:";
-		//echo $this->cxn->$table;
+		
 		if(in_array($this->cxn->$table,$list))                       #21
         {
-          //echo "some..";
+          
 		  $this->table_name = $table;
 		  $this->collection=$this->cxn->selectCollection($this->table_name);
 		  
@@ -52,13 +47,8 @@ class Account
     function selectAccount($userID)
     {
       $userID = trim($userID);                           #42
-      //$sql = "SELECT user_name FROM $this->table_name 
-       //       WHERE user_name ='$userID'";              #44
-	   //echo "all is well";
-	   //echo $this->collection;
-	   $result=$this->collection->findOne(array('user_name'=>$userID));
-	  //echo $result['user_name'];
-      //echo "sada";
+      $result=$this->collection->findOne(array('user_name'=>$userID));
+	  
       if(empty($result))                         #51
       {
         $this->message = "Account $userID 
@@ -80,12 +70,9 @@ class Account
         throw new Exception("No account currently selected");
         exit();
       }                                                  #70
-      //$sql = "SELECT user_name FROM $this->table_name
-       //       WHERE user_name ='$this->userID' AND
-         //           password = md5('$form_password')";
-	
+     
       $result=$this->collection->findOne(array('user_name'=>$this->userID,'password'=>md5($form_password)));             #74
-      //echo $result['password'];
+     
       if(empty($result))                         #80
       {
         $this->message  = "Incorrect password for 

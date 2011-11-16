@@ -94,7 +94,7 @@ switch ($action)
 		{
     		echo "There was an error uploading the file, please try again!";
 		}
-	  $download = new ContentDownload($sid,strval($fileId),$target_path);
+	  $download = new ContentDownload($sid,strval($fileId),$file_name);
       $file_id = $download->savesettings();   
       $fileId=$fileId+1;
 
@@ -103,8 +103,7 @@ switch ($action)
 
     break;
 
-  case "Cancel":
-    break;
+  
 }
 
 header("Location: sitesettings.php");

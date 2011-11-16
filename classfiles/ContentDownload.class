@@ -74,11 +74,12 @@ class ContentDownload extends BaseInfo
     return $result['fileName']; 
     }
      else
+	 {
       //return new ContentDownload($result['fileId'], $result['fname'],$result['setid']);
 	  return NULL;
     }
 
-  
+  }
    public static function findByIdContforS($sid,$fid)             #36	//for site settings
   {
         
@@ -92,10 +93,11 @@ class ContentDownload extends BaseInfo
     return $result['fileName']; 
     }
      else
+	 {
       //return new ContentDownload($result['fileId'], $result['fname'],$result['setid']);
 	  return NULL;
     }
-
+}
   public function save()      #61	//function to save files for content management
   {
 	$cxn = parent::getConnection("content_download");

@@ -1,12 +1,4 @@
- <?php
-require_once("../classfiles/Session.class");
-$sess=new Session();
-if($sess->getVariable("auth")!="yes")
-{
-	header("Location: ../login/login-OO.php");
-	exit();
-}
-?>
+ 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -86,6 +78,7 @@ if($sess->getVariable("auth")!="yes")
 								<dl style="width: 166px; height: 160px;" class="auto-style7">
 				                      &nbsp;<span class="BodyText"><dt style="width: 160px"><a href="contentmain1.php"">Content Management</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="sitesettings.php">Site Setting</a></dt></span>
+				                      &nbsp;<span class="BodyText"><dt><a href="contactmanage.php">Contact Us</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/EquitableDistribution/">Roles</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/Alimony/">User</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="logout.php">Logout</a></dt></span>
@@ -116,6 +109,7 @@ if($sess->getVariable("auth")!="yes")
 						<table cell0spacing="0" style="width: 91%; height: 280;" class="auto-style20" cellspacing="1">
 							<form method="post" enctype="multipart/form-data" action="settingadmin.php">
 								<?php
+								
 								echo "<input type=\"hidden\" name=\"sid\" value=\"".$sid."\">";
 								echo "<input type=\"hidden\" name=\"settingname\" value=\"defaultsettings\">";
 
@@ -134,8 +128,8 @@ if($sess->getVariable("auth")!="yes")
 										&nbsp;<br>&nbsp;
 										<?php 
 										
-										if ($x1==1){
-											echo "<a href=\"".$fname1."\" >Show</a>&nbsp;&nbsp;&nbsp;<a href=\"../adminpages/settingadmin.php?action=delete&fid=1\">Remove</a></td>";
+										if ($x1===1){
+											echo "<a href=\"/images/".$fname1."\" >Show</a>&nbsp;&nbsp;&nbsp;<a href=\"settingadmin.php?action=delete&fid=1\">Remove</a></td>";
 										    }
 										 ?>
 							</tr>
@@ -187,8 +181,8 @@ if($sess->getVariable("auth")!="yes")
 										&nbsp;<br>&nbsp;
 										<?php
 										
-										if ($x2==1){
-											echo "<a href=\"".$fname2."\" rel=\"lightbox\">Show</a>&nbsp;&nbsp;&nbsp;<a href=\"../adminpages/settingadmin.php?action=delete&fid=2\">Remove</a></td>";
+										if ($x2===1){
+											echo "<a href=\"/images/".$fname2."\" rel=\"lightbox\">Show</a>&nbsp;&nbsp;&nbsp;<a href=\"settingadmin.php?action=delete&fid=2\">Remove</a></td>";
 										    }
 										 ?>
 							</tr>
@@ -200,8 +194,8 @@ if($sess->getVariable("auth")!="yes")
 										&nbsp;<br>&nbsp;
 										<?php
 										
-										if ($x3==1){
-											echo "<a href=\"".$fname3."\" rel=\"lightbox\">Show</a>&nbsp;&nbsp;&nbsp;<a href=\"../adminpages/settingadmin.php?action=delete&fid=3\">Remove</a></td>";
+										if ($x3===1){
+											echo "<a href=\"/images/".$fname3."\" rel=\"lightbox\">Show</a>&nbsp;&nbsp;&nbsp;<a href=\"settingadmin.php?action=delete&fid=3\">Remove</a></td>";
 										    }
 										 ?>
 

@@ -3,7 +3,7 @@ require_once("../classfiles/Session.class");
 $sess=new Session();
 if($sess->getVariable("auth")!="yes")
 {
-	header("Location: login-OO.php");
+	header("Location: index.php");
 	exit();
 }
 
@@ -12,6 +12,8 @@ include_once("../classfiles/ContentDownload.class");
                     
 $base_url = "sitesettings.php";
 $trail = "<a href='$base_url'>Site Setting</a>";
+$fname1="";$fname2=NULL;$fname3=NULL;	
+//$path="/images/";
 $sid="1";
 $s_item = Settings::findById($sid);
 $address=$s_item->getAddress();
@@ -21,7 +23,7 @@ $cemail=$s_item->getContemail();
 $cd= new ContentDownload("1","1","asdsa");
 $i=1;
 $fname1=$cd->findByIdContforS($sid,strval($i));
- 
+ $x1=0;$x2=0;$x3=0;
  if ($fname1!==NULL)
 	$x1=1;
 
@@ -40,7 +42,7 @@ $fname3=$cd->findByIdContforS($sid,strval($i));
 include("../incfiles/sitesettings.inc");
 	     
 
-  			echo "shri ganesh";
+  		//	echo "shri ganesh";
 
 ?>
 

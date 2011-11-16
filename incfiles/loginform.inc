@@ -37,11 +37,11 @@ html, body {
 }
 </style>
 </head>
-<body>
-<div id="page-container">
-<table style="width: 100%" border="1" cellspacing="0" cellpadding="0">
-	<form action=<?php echo $_SERVER['PHP_SELF']?>
+<body style="width: 819px; height: 526px; margin-left: 154px; margin-top: 50px">
+<form action=<?php echo $_SERVER['PHP_SELF']?>
 	               method="POST"> 
+<table style="width: 100%" border="1" cellspacing="0" cellpadding="0">
+	
 	<tr>
 		<td width="33%" valign="top" class="auto-style3">
       <p style="font-size: 110%; font-weight: bold; text-align: center">
@@ -77,7 +77,7 @@ html, body {
          <?php
                foreach($fields_1 as $field => $value)                  #36
 		  {
-		    if(ereg("pass",$field))                               #38
+		    if(preg_match("/pass/i",$field))                               #38
 		       $type = "password";
 		    else
 		       $type = "text";
@@ -88,13 +88,14 @@ html, body {
 		                         size='{$length_1[$field]}' 
 		                         maxsize='{$length_1[$field]}'>
 		              </td></tr>\n";
+		              
 		  }                               
 			?>
 			<tr>
 	            <td colspan="2" style="text-align: center" >
 	              <br />
 	              <input type="submit" name="Button"
-	                  value="<?php echo $elements_1['submit']?>">
+	                  value="<?php echo $elements_1['submit']?>" />
 	                  <br/>
 	                  <br/>
 	            </td>
@@ -105,10 +106,10 @@ html, body {
 		
 		</td>
 	</tr>
-	</form>
 	
 </table>
-</div>
+</form>
+
 </body>
 
 </html>

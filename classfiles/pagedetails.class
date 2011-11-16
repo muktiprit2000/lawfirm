@@ -76,11 +76,7 @@ class Pagedetail extends BaseInfo
   public static function findAllmain()                     
   {
     $cxn = parent::getConnection("pagecontent");                     #25
-    /*$sql = "SELECT dept_id, name, description
-              FROM Pagedetail
-             ORDER BY name";
-    $results = $cxn->query($sql);*/
-	//$results=$cxn->find();
+    //$results=$cxn->find();
     $results=$cxn->find(array('parentid'=>"0"));
 	if (!$results)
     {
@@ -153,8 +149,7 @@ public static function findAll()
     
     if (!$result)
     {
-      throw new Exception("Problem getting data: " +
-                          $cxn->error);
+      throw new Exception("Problem getting data: " );
     }
                 
     
@@ -193,12 +188,11 @@ public static function findAll()
       
     if (!$results)
     {
-      throw new Exception("Problem getting data: " +
-                          $cxn->error);
+      throw new Exception("Problem getting data: " );
     }
      $depts = array();
 	foreach ($results as $db) {
-            print $db['name'];
+            //print $db['name'];
 			$depts[] = new Pagedetail($db['pageid'], 
         $db['pagename'], $db['pagebody'],$db['pagetitle'],$db['metatitle'],$db['metakeys'],$db['metadescription'],
 		$db['parentid']);
@@ -256,16 +250,7 @@ public static function findAll()
       throw new Exception("Problem deleting data: " +
                           $cxn->error);
     }
-    $fcxn = parent::getgridConnection();   
-	
-    $results=$fcxn->remove(array('pageid'=>$temp));
-	
-    if (!$results)
-    {
-      throw new Exception("Problem deleting data: " +
-                          $cxn->error);
-    }                                                #188
-    echo "deleted";
+    
   }
 
 

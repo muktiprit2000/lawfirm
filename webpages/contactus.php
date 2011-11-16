@@ -10,7 +10,7 @@ try                                                      #15
 {
 
   $form = 
-    new WebForm("../incfiles/contactform.inc","../incfiles/fields_contactus.inc",$_POST);
+    new WebForm("../webpages/child/contactform.inc","../webpages/child/fields_contactus.inc",$_POST);
 }
 catch(Exception $e)
 {
@@ -95,7 +95,7 @@ else                                                     #32
 
 				$GLOBALS['message_2']= "Thank you for contacting us. We will be contacting you soon.";
 				
-				header("Location: ../webpages/contactus.php");
+				header("Location: http://law-firm.orchestra.io/contactus.php");
 			}
 			catch(Exception $e)
 			{

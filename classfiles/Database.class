@@ -15,56 +15,37 @@ class Database
   
   function __construct($filename)	//connect to mongo database  
   {
-    //include("$filename");		//file from the valid user data come from to longin to the perticular database in mongo
+    include("$filename");		//file from the valid user data come from to longin to the perticular database in mongo
      try {
-      $this->cxn = new Mongo("mongodb://c0d925ea:qvu8aidfbklek7t2fpnool6k5j@dbh83.mongolab.com:27837/orchestra_c0d925ea_40a09");
+      $this->cxn = new Mongo($mongoconnectionstring);
       
     }
     catch ( Exception $e ) {
       throw new Exception ( "Oops! Error connecting to MongoDB: " . $e->getMessage() );
    }
-    $this->host = $host;   	#25
+    //$this->host = $host;   	#25
 	
-    $this->user = $user;
+    //$this->user = $user;
 	
-    $this->password = $passwd;
+    //$this->password = $passwd;
 	
   }
 
-  function useDatabase($dbname)	//	use selected database 
+   function useDatabase()	//	use selected database 
   {
-    if(!$result = $this->cxn->listDBs())  #32
-    {        
-      throw new Exception("Database is not available. 
-                           Try again later");
-      email("dbadmin@ourplace.com","DB Problem",
-         "MONGODB server is not responding. ");
-      exit();
+  try
+  {
+    
+      $this->database_name = "orchestra_c0d925ea_40a09";
+      $this->db= $this->cxn->selectDB($this->database_name);
+      
     }
-    else                                                #41
-    {
-      	foreach ($result['databases'] as $db) {
-            //print $db['name'];
-			$database[] = $db['name'];
-        }
-
-    }
-    if(in_array($dbname,$database) ||
-       in_array(strtolower($dbname),$database))        #49	//try to find selected database in list og all the databases in mongo
-    {
-	  //echo "wow..";
-      $this->database_name = $dbname;
-      $this->db= $this->cxn->selectDB($dbname);
-      return TRUE;
-	  
-    }
-    else                                                #55
+    catch ( Exception $e )                                                #55
     {
       throw new Exception("Database $dbname not found.");
-      return FALSE;
+      
     }
   }
-  
   function setCollection($colle)		//set the perticulr collection
   {
 	 $this->collection=$this->db->selectCollection($colle);

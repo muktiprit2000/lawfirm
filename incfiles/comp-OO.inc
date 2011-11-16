@@ -1,17 +1,7 @@
 <?php
  /* File: comp-OO.inc
   * Desc: Contains the code for a Web page that displays
-  *       company and department data.
-*/
-?>
-<?php
-require_once("../classfiles/Session.class");
-$sess=new Session();
-if($sess->getVariable("auth")!="yes")
-{
-	header("Location: ../login/login-OO.php");
-	exit();
-}
+  *       company and department data.*/
 ?>
 
 
@@ -94,6 +84,7 @@ if($sess->getVariable("auth")!="yes")
 								<dl style="width: 138px; height: 129px;" class="auto-style7">
 				                      &nbsp;<span class="BodyText"><dt style="width: 160px"><a href="contentmain1.php"">Content Management</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="sitesettings.php">Site Setting</a></dt></span>
+				                      &nbsp;<span class="BodyText"><dt><a href="contactmanage.php">Contact Us</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/EquitableDistribution/">Roles</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/Alimony/">User</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="logout.php">Logout</a></dt></span>
@@ -123,15 +114,15 @@ if($sess->getVariable("auth")!="yes")
 					<div>
 						<table style="width: 100%" cellpadding="0" cellspacing="0" class="auto-style15">
 						<tr>
-							<td class="auto-style10" >Page Name</td>
-							<td class="auto-style13" style="width: 10%">View</td>
+							<td class="auto-style10" style="width: 412px" >Page Name</td>
 							<td class="auto-style16" style="width: 20%" >Manage Sub Pages</td>
 							<td class="auto-style13" style="width: 10%">Edit</td>
 							
 						</tr>
-						<?php
+						
 							
-						    for ($i = 1; $i<$row ; $i++)	
+						  <!--<?php		// may use this code latter for variable main options
+	
 						    {
 							$valuetemp=array();  
 							$col=1;  
@@ -141,14 +132,44 @@ if($sess->getVariable("auth")!="yes")
 							 	}
 								echo "<tr>"
 							."<td class=\"auto-style5\" style=\"width: 387px\">".$valuetemp[1]."</td>"
-							."<td class=\"auto-style5\" align=\"center\"><a href=\"../webpages/index.php\" target=\"_blank\">View</a></td>"
 							."<td class=\"auto-style5\" align=\"center\"><a href=\"".$valuetemp[2]."\" >Manage</a></td>"
 							."<td class=\"auto-style5\" align=\"center\"><a href=\"".$valuetemp[3]."\">Edit</a></td>"
 						."</tr>\n";
 						    
 							}
-						?>
-						
+						?>-->
+						<tr>
+						<td class="auto-style5" style="width:380px">Home</td>;
+						<td class="auto-style5" align="center"><a href="contentmain1.php?par_id=1&browse_level=manage">Manage</a></td>
+						<td class="auto-style5" align="center"><a href="contentmain1.php?page_id=1&browse_level=edit">Edit</a></td>
+						</tr>
+						<tr>
+						<td class="auto-style5" style="width:380px">Firm Overview</td>;
+						<td class="auto-style5" align="center"><a href="contentmain1.php?par_id=2&browse_level=manage">Manage</a></td>
+						<td class="auto-style5" align="center"><a href="contentmain1.php?page_id=2&browse_level=edit">Edit</a></td>
+						</tr>
+						<tr>
+						<td class="auto-style5" style="width:380px">Attorney Profile</td>;
+						<td class="auto-style5" align="center"><a href="contentmain1.php?par_id=3&browse_level=manage">Manage</a></td>
+						<td class="auto-style5" align="center"><a href="contentmain1.php?page_id=3&browse_level=edit">Edit</a></td>
+						</tr>
+						<tr>
+						<td class="auto-style5" style="width:380px">Practice Areas</td>;
+						<td class="auto-style5" align="center"><a href="contentmain1.php?par_id=4&browse_level=manage">Manage</a></td>
+						<td class="auto-style5" align="center"><a href="contentmain1.php?page_id=4&browse_level=edit">Edit</a></td>
+						</tr>
+						<tr>
+						<td class="auto-style5" style="width:380px">Resources</td>;
+						<td class="auto-style5" align="center"><a href="contentmain1.php?par_id=5&browse_level=manage">Manage</a></td>
+						<td class="auto-style5" align="center"><a href="contentmain1.phppage_id=5&browse_level=edit">Edit</a></td>
+						</tr>
+						<tr>
+						<td class="auto-style5" style="width:380px">Contact Us</td>;
+						<td class="auto-style5" ></td>
+						<td class="auto-style5" align="center"><a href="contentmain1.php?page_id=6&browse_level=edit">Edit</a></td>
+						</tr>
+
+
 						</table>
 					</div>
 					

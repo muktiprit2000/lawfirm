@@ -2,7 +2,7 @@
 include_once("../classfiles/pagedetails.class");  
 include_once("../classfiles/settings.class");  
 include_once("../classfiles/ContentDownload.class");
-$base_url = "default.php";
+$base_url = "http://law-firm.orchestra.io";
 $trail = "<a href='$base_url'>Home</a>";
 
 	$page["browse_level"] = isset($_GET['browse_level']) ?
@@ -13,6 +13,7 @@ $address=$s_item->getAddress();
 $phone=$s_item->getPhone();
 $aemail=$s_item->getAdminemail();
 $cemail=$s_item->getContemail();
+$fname1=""; $fname2=""; $fname3="";
 	
   switch ($page["browse_level"])
   {
@@ -53,11 +54,11 @@ $cemail=$s_item->getContemail();
 				$fname2=$cd->findByIdContforS("1","2");
 				
  			$fname3=$cd->findByIdContforP("1","2");
-			 if ($fname2===NULL)
+			 if ($fname3===NULL)
 				$fname3=$cd->findByIdContforS("1","3");
 
-	      include("../webpages/child/sweethome.inc");
-	      //include("../webpages/test.inc");
+	      include("/child/sweethome.inc");
+	      
 	      break;
 	  
 	  case  "links":
@@ -90,9 +91,9 @@ $cemail=$s_item->getContemail();
 				$fname2=$cd->findByIdContforS("1","2");
 				
  			$fname3=$cd->findByIdContforP($page_id,"2");
-			 if ($fname2===NULL)
+			 if ($fname3===NULL)
 				$fname3=$cd->findByIdContforS("1","3");
-			include("../webpages/child/webpages.inc");
+			include("/child/webpages.inc");
 
 			break;
 			
@@ -127,12 +128,13 @@ $cemail=$s_item->getContemail();
 				$fname2=$cd->findByIdContforS("1","2");
 				
  			$fname3=$cd->findByIdContforP($page_id,"2");
-			 if ($fname2===NULL)
+			 if ($fname3===NULL)
 				$fname3=$cd->findByIdContforS("1","3");
 
-	      include("../webpages/child/leftlinks.inc");
+	      include("/child/leftlinks.inc");
 
 		break;
 			
 }
 ?>	
+

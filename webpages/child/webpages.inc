@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <title><?php echo $pagetitle ?> </title>
-<link href="../css/home.css" rel="stylesheet" type="text/css" />
+<link href="http://law-firm.orchestra.io/css/Home.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -25,7 +25,7 @@
 									<td  style="vertical-align:middle" class="sitelogo" >
 										<?php 
 										
-											echo  "<img alt=\"The Caurey &amp; Millison Because family matters\" height=\"119\" longdesc=\"Logo\" src=\"".$fname1."\" width=\"100%\" />";?>
+											echo  "<img alt=\"The Caurey &amp; Millison Because family matters\" height=\"119\" longdesc=\"Logo\" src=\"../images/".$fname1."\" width=\"100%\" />";?>
 										
 									</td>
 									<td class="address" >
@@ -41,12 +41,12 @@
 								<td colspan="2" style="vertical-align:middle">
 									<div class="navigation">
 										<ul>
-											<li><a href="../webpages/default.php">HOME</a></li>
-											<li><a href="../webpages/default.php?page_id=2&browse_level=links">ATTORNEY PROFILE</a></li>
-											<li><a href="../webpages/default.php?page_id=3&browse_level=links">FIRM OVERVIEW</a></li>
-											<li><a href="../webpages/default.php?page_id=4&browse_level=links">PRACTICE AREAS</a></li>
-											<li><a href="../webpages/default.php?page_id=5&browse_level=links">RESOURCES</a></li>
-											<li><a href="../webpages/contactus.php">CONTACT US</a></li>
+											<li><a href="../index.php">HOME</a></li>
+											<li><a href="../index.php?page_id=2&browse_level=links">FIRM OVERVIEW</a></li>
+											<li><a href="../index.php?page_id=3&browse_level=links">ATTORNEY PROFILE</a></li>
+											<li><a href="../index.php?page_id=4&browse_level=links">PRACTICE AREAS</a></li>
+											<li><a href="../index.php?page_id=5&browse_level=links">RESOURCES</a></li>
+											<li><a href="../contactus.php">CONTACT US</a></li>
 										</ul>
 									</div>
 								 </td>
@@ -56,7 +56,7 @@
 								<td colspan="2" style="vertical-align:middle">
 					
 										<?php 
-								echo "<img alt=\"mid image\" height=\"132\" longdesc=\"midimage\" src=\"".$fname2."\" width=\"100%\" />"; ?>
+								echo "<img alt=\"mid image\" height=\"132\" longdesc=\"midimage\" src=\"../images/".$fname2."\" width=\"100%\" />"; ?>
 						
 								</td>
 								
@@ -99,7 +99,7 @@
 			
 							                	 </dl>
 												<?php 
-												echo "<img  height=\"132\" longdesc=\"leftimage\" src=\"".$fname3."\" width=\"80%\" />"; ?>
+												echo "<img  height=\"132\" longdesc=\"leftimage\" src=\"../images/".$fname3."\" width=\"80%\" />"; ?>
  
 
 										 </div>
@@ -125,10 +125,10 @@
 								<td colspan="2">
 									<div class="footer">
 										<ul>
-											<li><a href="../webpages/default.php">SITE MAP</a></li>
-											<li><a href="../webpages/default.php?page_id=2&browse_level=links">TERMS OF USE</a></li>
-											<li><a href="../webpages/default.php?page_id=3&browse_level=links">FIRM OVERVIEW</a></li>
-											<li><a href="../webpages/default.php?page_id=4&browse_level=links">PRIVACY POLICY</a></li>
+											<li><a href="">SITE MAP</a></li>
+											<li><a href="">TERMS OF USE</a></li>
+											<li><a href="">FIRM OVERVIEW</a></li>
+											<li><a href="">PRIVACY POLICY</a></li>
 											<li class="BodyRegularFonts"> © 2010 CAREY LAW GROUP PA. All rights reserved. Attorney Advertising</li>									
 										</ul>
 										 

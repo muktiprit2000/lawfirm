@@ -22,9 +22,21 @@ if (!isset($action))
 echo $action;
 switch ($action)                                        
 {
-  case "delete":  
-    echo "delete";                                      #37
-    $page_item = Pagedetail::findById($pageid);
+  case "Update":  
+  
+  
+  for($i=0;$i<count($deletepage);$i++)
+  {
+  	
+  		$page_item= Pagedetail::findById($deletepage[$i]);
+        $page_item->delete();
+        
+      }
+    
+        
+    break;
+                              #37
+    /*$page_item = Pagedetail::findById($pageid);
     
     if (isset($page_item))
       try
@@ -36,14 +48,14 @@ switch ($action)
       {
         echo $e->getMessage();
         exit();
-      }
+      }*/
 
-    break;
+   
 
   case "Save":                                  
     
     if ($pageid)  
-    {echo "true";                                #65
+    {                               #65
     
       try
       {
@@ -54,7 +66,8 @@ switch ($action)
         echo $e->getMessage();
         exit();
       }
-      
+      $page_item->setPagetitle($pagetitle);
+      $page_item->setName($pagetitle);
       $page_item->setDescription($description);
       $page_item->setMetatitle($metatitle);
       $page_item->setMetakeys($metakeys);
@@ -64,7 +77,7 @@ switch ($action)
     }
     else                                                #81
     {
-       echo "false";
+       
       $pagename=$pagetitle;
        $page_item = new Pagedetail(NULL,$pagename,
         $pagetitle, $description, $metatitle,
@@ -86,7 +99,7 @@ switch ($action)
 	
 	      
       //$path = "C:/xampp/htdocs/MyWebSites/Law-Firm/images/";
-		$path = "../images/";
+		$path = "git@github.com:muktiprit2000/lawfirm.git/images/";
 	 $target_path = $path . $file_name; 
 	  if(move_uploaded_file($file['tmp_name'], $target_path))
 	   {
@@ -95,7 +108,7 @@ switch ($action)
 		{
     		echo "There was an error uploading the file, please try again!";
 		}
-	  $download = new ContentDownload($pageid,strval($fileId),$target_path);
+	  $download = new ContentDownload($pageid,strval($fileId),$file_name);
       $file_id = $download->save();
       $fileId=$fileId+1;
 
@@ -109,5 +122,5 @@ switch ($action)
     break;
 }
 
-//header("Location: contentmain1.php");
+header("Location: contentmain1.php");
 ?>

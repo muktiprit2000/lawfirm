@@ -1,12 +1,4 @@
- <?php
-require_once("../classfiles/Session.class");
-$sess=new Session();
-if($sess->getVariable("auth")!="yes")
-{
-	header("Location: ../login/login-OO.php");
-	exit();
-}
-?>
+ 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -38,6 +30,14 @@ if($sess->getVariable("auth")!="yes")
 }
 .auto-style8 {
 	text-align: left;
+}
+.auto-style9{
+font-family:: Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	font-style: normal;
+	color:black;
+	
 }
 .auto-style11 {
 	margin-bottom: 0px;
@@ -93,6 +93,7 @@ if($sess->getVariable("auth")!="yes")
 								<dl style="width: 166px; height: 160px;" class="auto-style7">
 				                      &nbsp;<span class="BodyText"><dt style="width: 160px"><a href="contentmain1.php"">Content Management</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="sitesettings.php">Site Setting</a></dt></span>
+				                      &nbsp;<span class="BodyText"><dt><a href="contactmanage.php">Contact Us</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/EquitableDistribution/">Roles</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/Alimony/">User</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="logout.php">Logout</a></dt></span>
@@ -126,9 +127,9 @@ if($sess->getVariable("auth")!="yes")
 							<tr>
 								<td class="auto-style4">&nbsp;
 								<?php
-								echo "<input type=\"hidden\" name=\"pageid\" value=\"$page_id\">";
-								echo "<input type=\"hidden\" name=\"pagename\" value=\"$pagename\">";
-                                echo "<input type=\"hidden\" name=\"parentid\" value=\"$parid\">";
+								echo "<input type=\"hidden\" name=\"pageid\" value=\"".$page_id."\">";
+								echo "<input type=\"hidden\" name=\"pagename\" value=\"".$pagename."\">";
+                                echo "<input type=\"hidden\" name=\"parentid\" value=\"".$parid."\">";
 								?>
 
 								</td>
@@ -165,7 +166,7 @@ if($sess->getVariable("auth")!="yes")
 										<td style="height: 47px">
 										
 											<input name="File1" type="file" class="auto-style17" />
-										&nbsp;<?php echo "<a href=\"".$fname1."\" >Show</a>"; ?> </td>
+										</td>
 									</tr>
 									<tr>
 										<td style="width: 177px">Left Side Image</td>

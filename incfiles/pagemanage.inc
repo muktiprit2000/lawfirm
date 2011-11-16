@@ -1,12 +1,3 @@
-<?php
-require_once("../classfiles/Session.class");
-$sess=new Session();
-if($sess->getVariable("auth")!="yes")
-{
-	header("Location: ../login/login-OO.php");
-	exit();
-}
-?>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -70,7 +61,7 @@ if($sess->getVariable("auth")!="yes")
 </head>
 
 <body style="width: 826px; height: 526px; margin-left: 154px; margin-top: 50px">
-
+<form method="post" action="Admin-OO.php">
 <table style="width: 831px" class="auto-style2">
 	<tr>
 		<td class="auto-style1" style="height: 34px; width: 817px;"><strong>Administrator Area</strong></td>
@@ -80,6 +71,7 @@ if($sess->getVariable("auth")!="yes")
 	</tr>
 	<tr>
 		<table style="width: 831px; height: 469px" class="auto-style5">
+		
 			<tr>
 				<td style="width: 211px" class="auto-style6" valign="top">
 					<div>
@@ -88,6 +80,7 @@ if($sess->getVariable("auth")!="yes")
 								<dl style="width: 138px; height: 129px;" class="auto-style7">
 				                      &nbsp;<span class="BodyText"><dt style="width: 160px"><a href="contentmain1.php"">Content Management</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="sitesettings.php">Site Setting</a></dt></span>
+				                      &nbsp;<span class="BodyText"><dt><a href="contactmanage.php">Contact Us</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/EquitableDistribution/">Roles</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="/practice-areas/Alimony/">User</a></dt></span>
 				                      &nbsp;<span class="BodyText"><dt><a href="logout.php">Logout</a></dt></span>
@@ -106,6 +99,7 @@ if($sess->getVariable("auth")!="yes")
 					</div>
 				
 				</td>
+				
 				<td class="auto-style2" valign="top" style="width: 683px">
 					<div>
 					<br />
@@ -123,9 +117,9 @@ if($sess->getVariable("auth")!="yes")
 					
 					<div>
 						<table style="width: 100%" cellpadding="0" cellspacing="0" class="auto-style15">
+						
 						<tr>
 							<td class="auto-style10" >Page Name</td>
-							<td class="auto-style13" style="width: 10%">View</td>
 							<td class="auto-style13" style="width: 10%">Edit</td>
 							<td class="auto-style13" style="width: 15%">Delete</td>
 							
@@ -141,9 +135,8 @@ if($sess->getVariable("auth")!="yes")
 							 	}
 								echo "<tr>"
 							."<td class=\"auto-style5\" style=\"width: 387px\">".$valuetemp[1]."</td>"
-							."<td class=\"auto-style5\" align=\"center\"><a href=\"../webpages/index.php\" target=\"_blank\">View</a></td>"
 							."<td class=\"auto-style5\" align=\"center\"><a href=\"".$valuetemp[2]."\" >Edit</a></td>"
-							."<td class=\"auto-style5\" align=\"center\"><a href=\"".$valuetemp[3]."\">Delete</a></td>"
+							."<td class=\"auto-style5\" align=\"center\"><input type=\"checkbox\" name=\"deletepage[]\" value=\"".$valuetemp[3]."\" /></td>"
 						."</tr>\n";
 						    
 							}
@@ -151,6 +144,10 @@ if($sess->getVariable("auth")!="yes")
 						
 						</table>
 					</div>
+					<div align="center">
+	                    
+	                    <input type="submit" name="action" value="Update" />
+	                </div>
 					
 				</td>
 			</tr>
@@ -159,7 +156,7 @@ if($sess->getVariable("auth")!="yes")
 	</tr>
 	
 </table>
-
+</form>
 
 </body>
 
